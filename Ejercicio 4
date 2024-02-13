@@ -1,0 +1,25 @@
+import Data.Char (toUpper)
+import Data.Map (Map)
+import qualified Data.Map as Map
+
+gradeLabels :: [(Int, String)]
+gradeLabels =
+    [ (95, "Excelente")
+    , (85, "Notable")
+    , (75, "Bueno")
+    , (70, "Suficiente")
+    , (0, "Desempeño insuficiente")
+    ]
+
+assignGrade :: Int -> String
+assignGrade grade = snd $ head $ dropWhile (\(threshold, _) -> grade < threshold) gradeLabels
+
+processGrades :: Map String Int -> Map String String
+processGrades = Map.mapKeys (map toUpper) . Map.map assignGrade
+
+main :: IO ()
+main = do
+    let grades = Map.fromList [("Matemáticas", 90), ("Ciencias", 65), ("Historia", 80)]
+        processedGrades = processGrades grades
+    putStrLn $ "Notas originales: " ++ show grades
+    putStrLn $ "Calificaciones procesadas: " ++ show processedGrades
