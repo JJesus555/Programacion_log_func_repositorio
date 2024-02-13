@@ -8,10 +8,14 @@ ifThenElse cond thenVal elseVal =
 
 fizzbuzz :: Int -> String
 fizzbuzz n
-    | n >= 1 && n <= 100 = numberToWord n
-    | n `mod` 3 == 0 && n `mod` 5 == 0 = "FizzBuzz"
-    | n `mod` 3 == 0 = "Fizz"
-    | n `mod` 5 == 0 = "Buzz"
+    | n >= 1 && n <= 100 =
+        if n `mod` 3 == 0 && n `mod` 5 == 0
+            then "FizzBuzz!"
+            else if n `mod` 3 == 0
+                then "Fizz!"
+                else if n `mod` 5 == 0
+                    then "Buzz!"
+                    else numberToWord n
     | otherwise = show n
 
 numberToWord :: Int -> String
@@ -39,3 +43,4 @@ tens n
 
 main :: IO ()
 main = mapM_ (putStrLn . fizzbuzz) [65]
+
