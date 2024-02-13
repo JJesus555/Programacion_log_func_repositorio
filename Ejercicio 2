@@ -1,0 +1,17 @@
+applyFunctionToList :: (a -> b) -> [a] -> [b]
+applyFunctionToList _ [] = []
+applyFunctionToList f (x:xs) = f x : applyFunctionToList f xs
+
+double :: Int -> Int
+double x = x * 2
+
+numbers :: [Int]
+numbers = [1, 2, 3, 4, 5]
+
+doubledNumbers :: [Int]
+doubledNumbers = applyFunctionToList double numbers
+
+main :: IO ()
+main = do
+    putStrLn $ "Lista original: " ++ show numbers
+    putStrLn $ "Lista con la función aplicada: " ++ show doubledNumbers
