@@ -1,0 +1,19 @@
+filterByFunction :: (a -> Bool) -> [a] -> [a]
+filterByFunction _ [] = []
+filterByFunction f (x:xs)
+    | f x = x : filterByFunction f xs
+    | otherwise = filterByFunction f xs
+
+isEven :: Int -> Bool
+isEven x = x `mod` 2 == 0
+
+numbers :: [Int]
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+evenNumbers :: [Int]
+evenNumbers = filterByFunction isEven numbers
+
+main :: IO ()
+main = do
+    putStrLn $ "Lista original: " ++ show numbers
+    putStrLn $ "Lista filtrada (solo pares): " ++ show evenNumbers
