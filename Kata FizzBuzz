@@ -1,0 +1,41 @@
+module Main where
+
+ifThenElse :: Bool -> a -> a -> a
+ifThenElse cond thenVal elseVal =
+    case cond of
+        True -> thenVal
+        False -> elseVal
+
+fizzbuzz :: Int -> String
+fizzbuzz n
+    | n >= 1 && n <= 100 = numberToWord n
+    | n `mod` 3 == 0 && n `mod` 5 == 0 = "FizzBuzz"
+    | n `mod` 3 == 0 = "Fizz"
+    | n `mod` 5 == 0 = "Buzz"
+    | otherwise = show n
+
+numberToWord :: Int -> String
+numberToWord n
+    | n < 20 = lessThan20 n
+    | n < 100 = tens (n `div` 10) ++ " " ++ lessThan20 (n `mod` 10)
+    | n == 100 = "One Hundred"
+    | otherwise = show n
+
+lessThan20 :: Int -> String
+lessThan20 n
+    | n >= 1 && n < 20 =
+        let answers = words ("one two three four five six seven eight nine ten " ++
+                "eleven twelve thirteen fourteen fifteen sixteen " ++
+                "seventeen eighteen nineteen")
+        in answers !! (n-1)
+    | otherwise = ""
+
+tens :: Int -> String
+tens n  
+    | n >= 2 && n <= 9 =
+        let answers = words "twenty thirty forty fifty sixty seventy eighty ninety"
+        in answers !! (n-2)
+    | otherwise = ""
+
+main :: IO ()
+main = mapM_ (putStrLn . fizzbuzz) [65]
