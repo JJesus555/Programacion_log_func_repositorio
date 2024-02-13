@@ -1,0 +1,20 @@
+import Data.Char (toUpper)
+import qualified Data.Map as Map
+
+assignGrade :: Int -> String
+assignGrade grade
+    | grade >= 95 = "Excelente"
+    | grade >= 85 = "Notable"
+    | grade >= 75 = "Bueno"
+    | grade >= 70 = "Suficiente"
+    | otherwise   = "Desempeño insuficiente"
+
+assignGrades :: Map.Map String Int -> Map.Map String String
+assignGrades = Map.mapKeys (map toUpper) . Map.map assignGrade . Map.filterWithKey (\_ grade -> grade >= 70)
+
+main :: IO ()
+main = do
+    let grades = Map.fromList [("Matemáticas", 90), ("Ciencias", 65), ("Historia", 80)]
+        gradedSubjects = assignGrades grades
+    putStrLn $ "Notas originales: " ++ show grades
+    putStrLn $ "Asignaturas calificadas: " ++ show gradedSubjects
