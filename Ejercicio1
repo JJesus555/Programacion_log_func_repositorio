@@ -1,0 +1,36 @@
+import Data.List (intercalate)
+import Numeric (showFFloat)
+
+functions :: [(String, Double -> Double)]
+functions =
+    [ ("seno", sin)
+    , ("coseno", cos)
+    , ("tangente", tan)
+    , ("exponencial", exp)
+    , ("logaritmo neperiano", log)
+    ]
+
+printRow :: Int -> Double -> String
+printRow n result = show n ++ " | " ++ showFFloat (Just 4) result ""
+
+generateTable :: Int -> (Double -> Double) -> String
+generateTable value f =
+    let values = map (\x -> (fromIntegral x, f (fromIntegral x))) [1..value]
+        rows = map (\(n, result) -> printRow n result) values
+    in unlines rows
+
+scientificCalculator :: IO ()
+scientificCalculator = do
+    putStrLn "Calculadora científica"
+    putStrLn "Elija una función:"
+    mapM_ (\(name, _) -> putStrLn $ "- " ++ name) functions
+    putStrLn "Ingrese el valor:"
+    value <- readLn :: IO Int
+    putStrLn "Ingrese la función a aplicar:"
+    functionName <- getLine
+    case lookup functionName functions of
+        Just f -> putStrLn $ generateTable value f
+        Nothing -> putStrLn "Función no válida"
+
+main :: IO ()
+main = scientificCalculator
