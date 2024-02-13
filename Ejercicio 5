@@ -7,7 +7,6 @@ type Vector = [Double]
 vectorModulus :: Vector -> Double
 vectorModulus v = sqrt $ sum $ map (^2) v
 
--- Ejemplo de uso
 main :: IO ()
 main = do
     let vector = [3, 4]
