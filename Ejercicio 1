@@ -1,0 +1,28 @@
+type Price = Double
+type Percentage = Double
+type Product = String
+type ShoppingCart = [(Product, Price, Percentage)]
+
+applyDiscount :: Percentage -> Price -> Price
+applyDiscount discount price = price * (1 - discount / 100)
+
+applyVAT :: Percentage -> Price -> Price
+applyVAT vat price = price * (1 + vat / 100)
+
+applyFunctionToShoppingCart :: (Percentage -> Price -> Price) -> ShoppingCart -> Price
+applyFunctionToShoppingCart _ [] = 0
+applyFunctionToShoppingCart f ((_, price, percentage):rest) = f percentage price + applyFunctionToShoppingCart f rest
+
+shoppingCart :: ShoppingCart
+shoppingCart = [("Producto1", 100, 10), ("Producto2", 50, 20), ("Producto3", 30, 0)]
+
+finalPriceWithDiscount :: Price
+finalPriceWithDiscount = applyFunctionToShoppingCart applyDiscount shoppingCart
+
+finalPriceWithVAT :: Price
+finalPriceWithVAT = applyFunctionToShoppingCart applyVAT shoppingCart
+
+main :: IO ()
+main = do
+    putStrLn $ "Precio final con descuento: " ++ show finalPriceWithDiscount
+    putStrLn $ "Precio final con IVA: " ++ show finalPriceWithVAT
