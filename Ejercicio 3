@@ -1,0 +1,21 @@
+import Data.Map (Map)
+import qualified Data.Map as Map
+
+splitIntoWords :: String -> [String]
+splitIntoWords = words
+
+wordLength :: String -> Int
+wordLength = length
+
+createWordLengthDictionary :: String -> Map String Int
+createWordLengthDictionary sentence =
+    let wordsList = splitIntoWords sentence
+        wordLengths = map wordLength wordsList
+    in Map.fromList (zip wordsList wordLengths)
+
+main :: IO ()
+main = do
+    let sentence = "Frase de ejemplo"
+        wordLengthDict = createWordLengthDictionary sentence
+    putStrLn $ "Frase original: " ++ sentence
+    putStrLn $ "Diccionario de palabras y sus longitudes: " ++ show wordLengthDict
