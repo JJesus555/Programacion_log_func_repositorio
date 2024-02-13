@@ -1,0 +1,29 @@
+module Main where
+
+import Data.List (sort)
+import Data.List.Extra (mean)
+
+standardDeviation :: [Double] -> Double
+standardDeviation xs =
+    let m = mean xs
+        n = fromIntegral $ length xs
+        squaredDeviations = map (\x -> (x - m) ^ 2) xs
+    in sqrt (sum squaredDeviations / n)
+
+zScore :: Double -> [Double] -> Double
+zScore x xs =
+    let m = mean xs
+        s = standardDeviation xs
+    in (x - m) / s
+
+outliers :: [Double] -> [Double]
+outliers xs =
+    let zScores = map (`zScore` xs) xs
+    in [x | (x, z) <- zip xs zScores, abs z > 3]
+
+main :: IO ()
+main = do
+    let sample = [1, 2, 3, 4, 5, 1000]
+        outliersList = outliers sample
+    putStrLn $ "Muestra original: " ++ show sample
+    putStrLn $ "Valores atípicos: " ++ show outliersList
