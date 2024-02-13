@@ -1,0 +1,15 @@
+module Main where
+
+import qualified Data.List as List
+
+type Vector = [Double]
+
+vectorModulus :: Vector -> Double
+vectorModulus v = sqrt $ sum $ map (^2) v
+
+-- Ejemplo de uso
+main :: IO ()
+main = do
+    let vector = [3, 4]
+        modulus = vectorModulus vector
+    putStrLn $ "El módulo del vector " ++ show vector ++ " es " ++ show modulus
