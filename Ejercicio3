@@ -1,0 +1,20 @@
+
+assignGrades :: [Int] -> [String]
+assignGrades = map assignGrade
+    where
+        assignGrade :: Int -> String
+        assignGrade grade =
+            case grade of
+                g | g >= 95 -> "Excelente"
+                g | g >= 85 -> "Notable"
+                g | g >= 75 -> "Bueno"
+                g | g >= 70 -> "Suficiente"
+                _          -> "Desempeño insuficiente"
+
+-- Ejemplo de uso:
+main :: IO ()
+main = do
+    let grades = [90, 60, 80, 100, 70]
+        assignedGrades = assignGrades grades
+    putStrLn $ "Calificaciones originales: " ++ show grades
+    putStrLn $ "Calificaciones asignadas: " ++ show assignedGrades
