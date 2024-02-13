@@ -1,0 +1,34 @@
+
+import Data.List (sortBy)
+import Data.Function (on)
+
+data Inmueble = Inmueble { año :: Int
+                         , metros :: Int
+                         , habitaciones :: Int
+                         , garaje :: Bool
+                         , zona :: Char
+                         } deriving Show
+
+calcularPrecio :: Inmueble -> Double
+calcularPrecio inmueble
+    | zona inmueble == 'A' = precioBase * (1 - fromIntegral (año inmueble) / 100)
+    | zona inmueble == 'B' = precioBase * 1.5 * (1 - fromIntegral (año inmueble) / 100)
+    where precioBase = fromIntegral (metros inmueble * 1000 + habitaciones inmueble * 5000 + if garaje inmueble then 15000 else 0)
+
+buscarInmueblesPorPresupuesto :: [Inmueble] -> Double -> [Inmueble]
+buscarInmueblesPorPresupuesto inmuebles presupuesto =
+    let inmueblesConPrecio = map (\inmueble -> (inmueble, calcularPrecio inmueble)) inmuebles
+        inmueblesFiltrados = filter (\(_, precio) -> precio <= presupuesto) inmueblesConPrecio
+    in map fst inmueblesFiltrados
+
+main :: IO ()
+main = do
+    let listaInmuebles = [ Inmueble { año = 2000, metros = 100, habitaciones = 3, garaje = True, zona = 'A' }
+                         , Inmueble { año = 2012, metros = 60, habitaciones = 2, garaje = True, zona = 'B' }
+                         , Inmueble { año = 1980, metros = 120, habitaciones = 4, garaje = False, zona = 'A' }
+                         , Inmueble { año = 2005, metros = 75, habitaciones = 3, garaje = True, zona = 'B' }
+                         , Inmueble { año = 2015, metros = 90, habitaciones = 2, garaje = False, zona = 'A' }
+                         ]
+        presupuesto = 100000
+        inmueblesFiltrados = buscarInmueblesPorPresupuesto listaInmuebles presupuesto
+    putStrLn $ "Inmuebles filtrados por presupuesto de " ++ show presupuesto ++ ":\n" ++ show inmueblesFiltrados
