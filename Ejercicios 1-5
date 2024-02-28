@@ -1,0 +1,48 @@
+1.
+ module Main where
+
+sumarLista :: [Int] -> Int
+sumarLista [] = 0                  
+sumarLista (x:xs) = x + sumarLista xs
+
+main :: IO ()
+main = do
+    let lista = [1, 2, 3, 4, 5]
+    putStrLn $ "La suma de los elementos en la lista es: " ++ show (sumarLista lista)
+
+2.
+ factorial :: Int -> Int
+factorial 0 = 1    
+factorial n = n * factorial (n - 1)
+
+main :: IO ()
+main = do
+    let n = 5
+    putStrLn $ "El factorial de " ++ show n ++ " es: " ++ show (factorial n)
+
+3. 
+numerosPares :: Int -> [Int]
+numerosPares n = [x | x <- [0..n], even x]
+
+main :: IO ()
+main = do
+    let n = 10
+    putStrLn $ "Lista de números pares hasta " ++ show n ++ ": " ++ show (numerosPares n)
+
+4.
+longitudCadena :: String -> Int
+longitudCadena [] = 0
+longitudCadena (_:xs) = 1 + longitudCadena xs
+
+main :: IO ()
+main = do
+    let cadena = "Cadena a analisar"
+    putStrLn $ "La longitud de la cadena \"" ++ cadena ++ "\" es: " ++ show (longitudCadena cadena)
+5.
+reversoLista :: [a] -> [a]
+reversoLista [] = []                      
+reversoLista (x:xs) = reversoLista xs ++ [x]
+main :: IO ()
+main = do
+    let lista = [1, 2, 3, 4, 5]
+    putStrLn $ "El reverso de la lista " ++ show lista ++ " es: " ++ show (reversoLista lista)
