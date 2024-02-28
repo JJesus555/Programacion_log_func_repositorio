@@ -1,0 +1,50 @@
+6.
+duplicarElementos :: [Int] -> [Int]
+duplicarElementos [] = []              
+duplicarElementos (x:xs) = x : x : duplicarElementos xs
+
+main :: IO ()
+main = do
+    let lista = [1, 2, 3, 4, 5]
+    putStrLn $ "La lista duplicada de " ++ show lista ++ " es: " ++ show (duplicarElementos lista)
+
+7.
+filtrarPares :: [Int] -> [Int]
+filtrarPares [] = []                        
+filtrarPares (x:xs)
+    | even x = x : filtrarPares xs
+    | otherwise = filtrarPares xs
+
+main :: IO ()
+main = do
+    let lista = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    putStrLn $ "Los elementos pares de la lista " ++ show lista ++ " son: " ++ show (filtrarPares lista)
+
+8.
+fibonacci :: Int -> Int
+fibonacci 0 = 0        
+fibonacci 1 = 1              
+fibonacci n = fibonacci (n - 1) + fibonacci (n - 2)  
+
+main :: IO ()
+main = do
+    let n = 10
+    putStrLn $ "El " ++ show n ++ "-ésimo número de Fibonacci es: " ++ show (fibonacci n)
+9.
+divisores :: Int -> [Int]
+divisores n = [x | x <- [1..n], n `mod` x == 0]
+
+main :: IO ()
+main = do
+    let numero = 20
+    putStrLn $ "Los divisores de " ++ show numero ++ " son: " ++ show (divisores numero)
+10.
+esPalindromo :: String -> Bool
+esPalindromo s = s == reverse s
+
+main :: IO ()
+main = do
+    let cadena1 = "reconocer"
+        cadena2 = "hello"
+    putStrLn $ "¿La cadena \"" ++ cadena1 ++ "\" es un palíndromo? " ++ show (esPalindromo cadena1)
+    putStrLn $ "¿La cadena \"" ++ cadena2 ++ "\" es un palíndromo? " ++ show (esPalindromo cadena2)
